@@ -57,10 +57,12 @@ class VoiceAssistant:
         # Общение с ИИ
         print("🤔 Думаю...")
         response = self.chat.chat(text)
-        print(f"🤖 Ассистент: {response}")
-
-        # Озвучиваем ответ
-        self.voice.speak(response)
+        if response:
+            print(f"🤖 Ассистент: {response}")
+            # Озвучиваем ответ
+            self.voice.speak(response)
+        else:
+            print("⚠️ Не удалось получить ответ от ассистента")
 
     def run(self):
         """Запуск ассистента"""
