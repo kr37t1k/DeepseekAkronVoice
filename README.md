@@ -1,11 +1,13 @@
-# DeepseekAkronVoice
-Speech-to-text tool for talking with Deepseek AI assistant.
+# Voice Assistant with Local AI
+
+Speech-to-text tool for talking with a local AI assistant. Now supports running AI models locally on your device instead of using external APIs.
 
 ## Features
 - Voice input using Vosk speech recognition
-- Integration with DeepSeek API for AI responses
+- Integration with local AI server for AI responses (no API key needed)
 - Text-to-speech output using pyttsx3
-- Russian language support
+- Support for running on mobile devices
+- OpenAI-compatible API interface
 
 ## Setup
 
@@ -14,20 +16,35 @@ Speech-to-text tool for talking with Deepseek AI assistant.
 pip install -r requirements.txt
 ```
 
-2. Download a Vosk model for Russian language from https://alphacephei.com/vosk/models and extract it to `vosk-model-small-ru` directory.
+2. Download a Vosk model for your preferred language from https://alphacephei.com/vosk/models and extract it to the appropriate directory (update VOSK_MODEL_PATH in config.py if needed).
 
-3. Set your DeepSeek API key in `config.py`:
+3. Configure your local AI server URL in `config.py`:
 ```python
-DEEPSEEK_API_KEY = "your_actual_api_key_here"
+LOCAL_AI_URL = "http://0.0.0.0:8001/v1/chat/completions"  # Your local server
 ```
 
 ## Usage
+
+### Option 1: Connect to existing local server
 ```bash
 python app.py
 ```
 
+### Option 2: Run with integrated server (if running locally)
+```bash
+python app_with_server.py --start-server --model-path /path/to/your/model.gguf
+```
+
+### Option 3: Run the server separately (for mobile)
+```bash
+python run_llama_server.py --model-path /path/to/your/model.gguf --host 0.0.0.0 --port 8001
+```
+
 ## Configuration
+
 Edit `config.py` to customize:
-- API key and URL
+- Local AI server URL
 - Vosk model path
 - Voice settings
+
+For detailed setup instructions, see LOCAL_AI_SETUP.md
