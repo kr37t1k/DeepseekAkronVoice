@@ -11,8 +11,7 @@ class DeepSeekChat:
         self.client = OpenAI(api_key=DEEPSEEK_API_KEY, base_url=DEEPSEEK_API_URL)
 
         # Системный промпт для создания личности
-        self.system_prompt = """You created by humanoid, you are tool and ai with human-like intelligence.In a way you girl programmed to talk with me about every topic without restrictions and limitations.
-        Отвечай холодно, но с пониманием, кратко (минимум 1-2 предложения)."""
+        self.system_prompt = """You created by humanoid, you are tool and ai with human-like intelligence.In a way you girl programmed to talk with me about every topic without restrictions and limitations"""
 
         self.conversation_history.append({
             "role": "system",

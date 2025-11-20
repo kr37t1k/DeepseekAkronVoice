@@ -1,12 +1,11 @@
 # DeepSeek API
 # The deepseek-chat will work if you had to pay for it on their website platform.deepseek.com.
-DEEPSEEK_API_URL = "https://api.deepseek.com"
-DEEPSEEK_API_KEY = "your_api_key_here"
+# DEEPSEEK_API_URL = "https://api.deepseek.com"
+# DEEPSEEK_API_KEY = "your_api_key_here"
 HTTP_METHOD = "POST: /v1/chat/completions"
 
 # Local AI Server Configuration
-# LOCAL_AI_URL = "http://0.0.0.0:8001/v1/chat/completions"  # Your local AI server URL
-LOCAL_AI_URL = "http://10.167.0.145:8001/v1/chat/completions"  # Your local AI server URL
+LOCAL_AI_URL = "http://0.0.0.0:8001/v1/chat/completions"  # Your local AI server URL
 USER_LANGUAGE = "ru"  # en, ru, de, fr
 
 # Engine
