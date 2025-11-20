@@ -49,12 +49,16 @@ class VoiceAssistant:
             print("👋 Exiting!")
             exit()
 
-        response = self.chat.chat(text)
-        if response:
-            print(f"🤖 AI: {response}")
-            self.voice.speak(response)
-        else:
-            print("⚠️ AI: No response")
+        try:
+            response = self.chat.chat(text)
+            if response:
+                print(f"🤖 AI: {response}")
+                self.voice.speak(response)
+            else:
+                print("⚠️ AI: No response received")
+        except Exception as e:
+            print(f"❌ Error processing command: {e}")
+            self.voice.speak("Sorry, there was an error processing your request.")
 
     def run(self):
         try:

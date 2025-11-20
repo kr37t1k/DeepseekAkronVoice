@@ -8,6 +8,10 @@ HTTP_METHOD = "POST: /v1/chat/completions"
 LOCAL_AI_URL = "http://0.0.0.0:8001/v1/chat/completions"  # Your local AI server URL
 USER_LANGUAGE = "ru"  # en, ru, de, fr
 
+# Connection settings
+CONNECTION_TIMEOUT = 60  # Timeout for connections in seconds
+MAX_RETRIES = 3          # Number of retry attempts for failed requests
+
 # Engine
 VOICE_ENGINE = "pyttsx3"  # silero, pyttsx3, espeak, spd
 

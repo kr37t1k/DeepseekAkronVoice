@@ -13,6 +13,8 @@ from urllib.parse import urlparse, parse_qs
 import threading
 import queue
 import os
+import socket
+from socketserver import ThreadingMixIn
 
 # Try to import llama-cpp-python, fallback to mock if not available
 try:
@@ -68,6 +70,11 @@ class MockLlamaModel:
         }
 
 
+class ThreadedHTTPServer(ThreadingMixIn, HTTPServer):
+    """Handle requests in separate threads"""
+    daemon_threads = True
+    allow_reuse_address = True
+
 class LlamaRequestHandler(BaseHTTPRequestHandler):
     """HTTP request handler for the LLaMA server"""
     
@@ -75,12 +82,19 @@ class LlamaRequestHandler(BaseHTTPRequestHandler):
         self.model = model
         super().__init__(*args, **kwargs)
     
+    def setup(self):
+        """Set up the request handler with timeout"""
+        super().setup()
+        # Set socket timeout to prevent hanging connections
+        self.connection.settimeout(60)  # 60 seconds timeout
+    
     def do_OPTIONS(self):
         """Handle CORS preflight requests"""
         self.send_response(200)
         self.send_header('Access-Control-Allow-Origin', '*')
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
         self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.send_header('Connection', 'close')  # Close connection after response
         self.end_headers()
     
     def do_POST(self):
@@ -118,18 +132,40 @@ class LlamaRequestHandler(BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Access-Control-Allow-Origin', '*')
+            # Add headers to prevent connection issues
+            self.send_header('Connection', 'close')
+            response_json = json.dumps(response, separators=(',', ':'))  # Compact JSON to avoid issues
+            self.send_header('Content-Length', len(response_json.encode('utf-8')))
             self.end_headers()
             
-            response_json = json.dumps(response, indent=2)
-            self.wfile.write(response_json.encode('utf-8'))
+            # Write response in chunks to handle connection issues better
+            try:
+                self.wfile.write(response_json.encode('utf-8'))
+            except (BrokenPipeError, ConnectionResetError, socket.error) as write_error:
+                logger.warning(f"Error writing response: {write_error}")
+                # Client disconnected, nothing we can do
             
             logger.info(f"Generated response for request with {len(messages)} messages")
             
         except json.JSONDecodeError:
-            self.send_error(400, "Invalid JSON in request")
+            logger.error("Invalid JSON in request")
+            try:
+                self.send_error(400, "Invalid JSON in request")
+            except:
+                logger.warning("Could not send error response for JSON decode error")
+        except BrokenPipeError:
+            logger.warning("Client disconnected before response was sent")
+        except ConnectionResetError:
+            logger.warning("Connection was reset by client")
+        except socket.error as e:
+            logger.error(f"Socket error: {e}")
         except Exception as e:
             logger.error(f"Error processing request: {e}")
-            self.send_error(500, f"Server error: {str(e)}")
+            try:
+                self.send_error(500, f"Server error: {str(e)}")
+            except:
+                # If we can't send an error response, client may have disconnected
+                logger.warning("Could not send error response, client may have disconnected")
     
     def log_message(self, format, *args):
         """Override to use our logger"""
@@ -142,15 +178,17 @@ def run_server(model, host='0.0.0.0', port=8001):
     def handler_factory(*args, **kwargs):
         return LlamaRequestHandler(model, *args, **kwargs)
     
-    server = HTTPServer((host, port), handler_factory)
+    server = ThreadedHTTPServer((host, port), handler_factory)
     logger.info(f"Starting LLaMA server on {host}:{port}")
     logger.info(f"API endpoint: http://{host}:{port}/v1/chat/completions")
+    logger.info("Server is configured with threaded connections and timeout handling")
     
     try:
         server.serve_forever()
     except KeyboardInterrupt:
         logger.info("Shutting down server...")
         server.shutdown()
+        server.server_close()
 
 
 def main():
