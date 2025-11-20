@@ -14,10 +14,14 @@ class SimpleVoice:
             self.engine.setProperty('voice', voices[1].id)  # Обычно женский
 
     def speak(self, text):
-        # Запускаем в отдельном потоке, чтобы не блокировать основную программу
-        def _speak():
+        # if self.engine.isBusy():
+            # self.engine.stop()
+        if self.engine.stop():
             self.engine.say(text)
             self.engine.runAndWait()
-
-        thread = threading.Thread(target=_speak)
-        thread.start()
+        # def _speak():
+        #     self.engine.say(text)
+        #     self.engine.runAndWait()
+        #
+        # thread = threading.Thread(target=_speak)
+        # thread.start()
