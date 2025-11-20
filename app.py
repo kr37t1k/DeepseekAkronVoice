@@ -10,23 +10,20 @@ from config import VOSK_MODEL_PATH
 
 class VoiceAssistant:
     def __init__(self):
-        # Инициализация компонентов
         self.model = vosk.Model(VOSK_MODEL_PATH)
         self.chat = DeepSeekChat()
         self.voice = SimpleVoice()
         self.samplerate = 16000
         self.audio_queue = queue.Queue()
 
-        print("🎤 Ассистент запущен! Говорите...")
+        print("🎤 Assistent is ready...")
 
     def audio_callback(self, indata, frames, time, status):
-        """Захватываем аудио с микрофона"""
         if status:
             print(f"Audio status: {status}")
         self.audio_queue.put(bytes(indata))
 
     def listen_loop(self):
-        """Основной цикл прослушивания"""
         with sd.RawInputStream(
                 samplerate=self.samplerate,
                 blocksize=8000,
@@ -44,34 +41,28 @@ class VoiceAssistant:
                     text = result.get('text', '').strip()
 
                     if text:
-                        print(f"🎤 Вы: {text}")
+                        print(f"🎤 You: {text}")
                         self.process_command(text)
 
     def process_command(self, text):
-        """Обрабатываем команду и генерируем ответ"""
-        # Простые команды для управления
-        if any(word in text.lower() for word in ['стоп', 'выход', 'заверши']):
-            print("👋 Завершаю работу...")
+        if any(word in text.lower() for word in ['exit', 'quit', 'stop']):
+            print("👋 Exiting!")
             exit()
 
-        # Общение с ИИ
-        print("🤔 Думаю...")
         response = self.chat.chat(text)
         if response:
-            print(f"🤖 Ассистент: {response}")
-            # Озвучиваем ответ
+            print(f"🤖 AI: {response}")
             self.voice.speak(response)
         else:
-            print("⚠️ Не удалось получить ответ от ассистента")
+            print("⚠️ AI: No response")
 
     def run(self):
-        """Запуск ассистента"""
         try:
             self.listen_loop()
         except KeyboardInterrupt:
-            print("\n👋 До свидания!")
+            print("\n👋 Stopping!")
         except Exception as e:
-            print(f"❌ Ошибка: {e}")
+            print(f"❌ Error: {e}")
 
 
 if __name__ == "__main__":

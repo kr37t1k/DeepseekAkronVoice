@@ -1,9 +1,11 @@
 # DeepSeek API
+# The deepseek-chat will work if you had to pay for it on their website platform.deepseek.com.
+DEEPSEEK_API_URL = "https://api.deepseek.com"
 DEEPSEEK_API_KEY = "your_api_key_here"
-DEEPSEEK_API_URL = "https://api.deepseek.com/v1/chat/completions"
+HTTP_METHOD = "POST: /v1/chat/completions"
 
-# Голосовой движок
-VOICE_ENGINE = "pyttsx3"  # или "silero" для оффлайн работы
+# Engine
+VOICE_ENGINE = "pyttsx3"  # silero, pyttsx3, espeak, spd
 
-# Настройки Vosk
-VOSK_MODEL_PATH = "vosk-model-small-ru"
+# Vosk
+VOSK_MODEL_PATH = "./en-us-0.22-lgraph"
