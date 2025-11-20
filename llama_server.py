@@ -86,7 +86,7 @@ class LlamaRequestHandler(BaseHTTPRequestHandler):
         """Set up the request handler with timeout"""
         super().setup()
         # Set socket timeout to prevent hanging connections
-        self.connection.settimeout(60)  # 60 seconds timeout
+        self.connection.settimeout(120)  # 120 seconds (2 minutes) timeout
     
     def do_OPTIONS(self):
         """Handle CORS preflight requests"""
@@ -212,6 +212,11 @@ def main():
                 model_path=args.model_path,
                 n_ctx=args.n_ctx,
                 n_threads=4,  # Adjust based on your device
+                n_batch=512,
+                seed=-1,
+                n_threads_batch=0,
+                chat_format=("qwen" if "qwen" in args.model_path else "llama-3"),
+                offload_kqv=True,
                 verbose=False
             )
             logger.info("Model loaded successfully!")
