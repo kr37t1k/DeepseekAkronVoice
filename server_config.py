@@ -11,16 +11,16 @@ CONTEXT_SIZE = 2048      # Context window size
 THREADS = 4              # Number of threads for model processing
 
 # Connection settings
-CONNECTION_TIMEOUT = 60  # Timeout for connections in seconds
+CONNECTION_TIMEOUT = 180  # Timeout for connections in seconds
 MAX_CONNECTIONS = 10     # Maximum concurrent connections
 KEEP_ALIVE = False       # Whether to keep connections alive
 
 # Model parameters
 DEFAULT_TEMPERATURE = 0.7
-DEFAULT_MAX_TOKENS = 500
+DEFAULT_MAX_TOKENS = 200
 
 # Logging
-LOG_LEVEL = "INFO"       # DEBUG, INFO, WARNING, ERROR
+LOG_LEVEL = "DEBUG"       # DEBUG, INFO, WARNING, ERROR
 LOG_FILE = "server.log"  # File to log server activity
 
 # CORS settings

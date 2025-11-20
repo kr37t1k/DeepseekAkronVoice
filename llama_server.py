@@ -86,7 +86,7 @@ class LlamaRequestHandler(BaseHTTPRequestHandler):
         """Set up the request handler with timeout"""
         super().setup()
         # Set socket timeout to prevent hanging connections
-        self.connection.settimeout(120)  # 120 seconds (2 minutes) timeout
+        self.connection.settimeout(180)  # 180 seconds (3 minutes) timeout
     
     def do_OPTIONS(self):
         """Handle CORS preflight requests"""
@@ -119,7 +119,7 @@ class LlamaRequestHandler(BaseHTTPRequestHandler):
             # Extract parameters
             messages = request_data.get('messages', [])
             temperature = request_data.get('temperature', 0.7)
-            max_tokens = request_data.get('max_tokens', 500)
+            max_tokens = request_data.get('max_tokens', 200)
             
             # Generate response using the model
             response = self.model.create_chat_completion(

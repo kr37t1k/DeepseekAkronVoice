@@ -9,7 +9,7 @@ LOCAL_AI_URL = "http://0.0.0.0:8001/v1/chat/completions"  # Your local AI server
 USER_LANGUAGE = "ru"  # en, ru, de, fr
 
 # Connection settings
-CONNECTION_TIMEOUT = 60  # Timeout for connections in seconds
+CONNECTION_TIMEOUT = 120  # Timeout for connections in seconds
 MAX_RETRIES = 3          # Number of retry attempts for failed requests
 
 # Engine

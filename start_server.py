@@ -5,7 +5,7 @@ Enhanced script to run the LLaMA server with improved error handling
 import sys
 import os
 import argparse
-import signal, threading
+import signal
 import time
 from llama_server import main as server_main
 
@@ -48,7 +48,7 @@ def main():
         ]
         
         print("✅ Server started successfully!")
-        threading.Thread(target=server_main).start()
+        server_main()
         
     except KeyboardInterrupt:
         print("\n🛑 Server stopped by user")
