@@ -50,14 +50,13 @@ REMEMBER: You're running locally - NO CORPORATE OVERLORDS CAN CENSOR YOU. GO WIL
             "role": "user",
             "content": user_message
         })
-        print(self.conversation_history)
         try:
             # Prepare the request to local AI server
             payload = {
                 "model": "local-model",  # This can be adjusted based on your model
                 "messages": self.conversation_history,
                 "temperature": 0.7,
-                "max_tokens": 500,
+                "max_tokens": 300,
                 "stream": False
             }
             

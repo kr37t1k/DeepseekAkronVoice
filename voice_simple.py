@@ -28,9 +28,11 @@ class SimpleVoice:
         if any(char in rus_chars for char in text):
             "rus lang text"
             self.choose_voice_by_language(self.voices, "ru")
+
         elif any(char in eng_chars for char in text):
             "eng lang text"
             self.choose_voice_by_language(self.voices, "en")
+
         with self.engine_lock:
             self.engine.say(text)
             self.engine.runAndWait()
