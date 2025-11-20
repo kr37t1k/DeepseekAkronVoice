@@ -3,7 +3,7 @@ import sounddevice as sd
 import queue
 import json
 import threading
-from deepseek_chat import DeepSeekChat
+from local_chat import LocalChat
 from voice_simple import SimpleVoice
 from config import VOSK_MODEL_PATH
 
@@ -11,7 +11,7 @@ from config import VOSK_MODEL_PATH
 class VoiceAssistant:
     def __init__(self):
         self.model = vosk.Model(VOSK_MODEL_PATH)
-        self.chat = DeepSeekChat()
+        self.chat = LocalChat()
         self.voice = SimpleVoice()
         self.samplerate = 16000
         self.audio_queue = queue.Queue()
