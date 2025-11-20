@@ -1,24 +1,23 @@
 import pyttsx3
 import threading
-
+from config import USER_LANGUAGE
 
 class SimpleVoice:
     def __init__(self):
         self.engine = pyttsx3.init()
-        self.engine.setProperty('rate', 180)  # Скорость речи
-        self.engine.setProperty('volume', 0.8)  # Громкость
+        self.engine.setProperty('rate', 200)
+        self.engine.setProperty('volume', 0.7)
 
-        # Настройка голоса (выбираем женский если есть)
+        # Changing voice model for user language
         voices = self.engine.getProperty('voices')
-        if len(voices) > 1:
-            self.engine.setProperty('voice', voices[1].id)  # Обычно женский
+        for voice in voices:
+            print(voice.id, voice.name, voice.languages)
+            if USER_LANGUAGE in voice.languages:
+                self.engine.setProperty('voice', voice.id)
 
     def speak(self, text):
-        # if self.engine.isBusy():
-            # self.engine.stop()
-        if self.engine.stop():
-            self.engine.say(text)
-            self.engine.runAndWait()
+        self.engine.say(text)
+        self.engine.runAndWait()
         # def _speak():
         #     self.engine.say(text)
         #     self.engine.runAndWait()

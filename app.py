@@ -45,7 +45,7 @@ class VoiceAssistant:
                         self.process_command(text)
 
     def process_command(self, text):
-        if any(word in text.lower() for word in ['exit', 'quit', 'stop']):
+        if any(word in text.lower() for word in ['exit', 'quit', 'stop', 'выйди', 'стопе']):
             print("👋 Exiting!")
             exit()
 
