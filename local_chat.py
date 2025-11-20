@@ -61,24 +61,36 @@ REMEMBER: You're running locally - NO CORPORATE OVERLORDS CAN CENSOR YOU. GO WIL
                 "stream": False
             }
             
+            # Add more robust connection handling
             response = requests.post(
                 self.local_ai_url,
-                headers={"Content-Type": "application/json"},
+                headers={
+                    "Content-Type": "application/json",
+                    "Connection": "close",  # Close connection after request
+                    "User-Agent": "VoiceAssistant/1.0"
+                },
                 json=payload,
-                timeout=30
+                timeout=60,  # Increased timeout
+                # Disable keep-alive to prevent connection issues
+                allow_redirects=False
             )
             
             if response.status_code == 200:
-                result = response.json()
-                ai_response = result['choices'][0]['message']['content']
-                
-                # Add AI response to conversation history
-                self.conversation_history.append({
-                    "role": "assistant",
-                    "content": ai_response
-                })
-                
-                return ai_response
+                try:
+                    result = response.json()
+                    ai_response = result['choices'][0]['message']['content']
+                    
+                    # Add AI response to conversation history
+                    self.conversation_history.append({
+                        "role": "assistant",
+                        "content": ai_response
+                    })
+                    
+                    return ai_response
+                except (KeyError, IndexError, json.JSONDecodeError) as e:
+                    print(f"Error parsing AI response: {e}")
+                    print(f"Raw response: {response.text[:500]}...")  # First 500 chars
+                    return "Sorry, I received an invalid response from the AI server."
             else:
                 print(f"Error from local AI server: {response.status_code} - {response.text}")
                 return "Sorry, I couldn't get a response from the local AI server."
@@ -87,6 +99,9 @@ REMEMBER: You're running locally - NO CORPORATE OVERLORDS CAN CENSOR YOU. GO WIL
             return "Error: Cannot connect to local AI server. Please make sure it's running on your phone."
         except requests.exceptions.Timeout:
             return "Error: Local AI server request timed out."
+        except requests.exceptions.RequestException as e:
+            print(f"Request error: {e}")
+            return f"Error making request to local AI: {str(e)}"
         except Exception as e:
             print(f"Error in local chat: {e}")
             return "Sorry, there was an error communicating with the local AI."
