@@ -50,6 +50,7 @@ class VoiceAssistant:
             exit()
 
         try:
+            # Use the threaded chat method to prevent blocking
             response = self.chat.chat(text)
             if response:
                 print(f"🤖 AI: {response}")
