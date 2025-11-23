@@ -5,9 +5,13 @@ Speech-to-text tool for talking with a local AI assistant. Now supports running 
 ## Features
 - Voice input using Vosk speech recognition
 - Integration with local AI server for AI responses (no API key needed)
-- Text-to-speech output using pyttsx3
+- Text-to-speech output with multiple engine options (pyttsx3, espeak, speech-dispatcher, Silero)
+- Language detection for English and Russian
+- Enhanced error handling for robust operation
+- Runtime voice engine switching
 - Support for running on mobile devices
 - OpenAI-compatible API interface
+- Model health checks and automatic fallbacks
 
 ## Setup
 

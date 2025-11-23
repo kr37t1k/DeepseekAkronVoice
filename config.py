@@ -15,6 +15,11 @@ MAX_RETRIES = 3          # Number of retry attempts for failed requests
 # Engine
 VOICE_ENGINE = "pyttsx3"  # silero, pyttsx3, espeak, spd
 
+# Additional voice settings
+VOICE_RATE = 200          # Speech rate
+VOICE_VOLUME = 0.7        # Volume level (0.0 to 1.0)
+VOICE_PITCH = 50          # Pitch level (0 to 100, if supported by engine)
+
 # Vosk
 # VOSK_MODEL_PATH = "./en-us-0.22-lgraph"
 VOSK_MODEL_PATH = "./small-ru-0.22"

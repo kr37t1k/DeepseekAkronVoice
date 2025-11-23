@@ -4,3 +4,8 @@ vosk
 sounddevice
 numpy
 llama-cpp-python
+# Additional voice engines
+py-espeak
+speechd
+silero
+torch
