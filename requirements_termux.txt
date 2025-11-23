@@ -1,0 +1,6 @@
+requests
+vosk
+sounddevice
+numpy
+# Minimal requirements for Termux - avoiding problematic packages like TTS, torch
+# These are often difficult to install on mobile devices
