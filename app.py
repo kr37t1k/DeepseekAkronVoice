@@ -2,17 +2,19 @@ import vosk
 import sounddevice as sd
 import queue
 import json
+import logging
 import threading
 from local_chat import LocalChat
-from voice_simple import SimpleVoice
+from voice_enhanced import EnhancedVoice
 from config import VOSK_MODEL_PATH
 
+logging.basicConfig(level=logging.DEBUG)
 
 class VoiceAssistant:
     def __init__(self):
         self.model = vosk.Model(VOSK_MODEL_PATH)
         self.chat = LocalChat()
-        self.voice = SimpleVoice()
+        self.voice = EnhancedVoice()
         self.samplerate = 16000
         self.audio_queue = queue.Queue()
 

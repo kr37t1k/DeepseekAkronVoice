@@ -5,7 +5,8 @@ sounddevice
 numpy
 llama-cpp-python
 # Additional voice engines
-py-espeak
-speechd
+#python-espeak
+#pico2wave
+TTS
 silero
 torch

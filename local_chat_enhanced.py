@@ -3,7 +3,7 @@ import time
 import threading
 import queue
 from config import LOCAL_AI_URL, CONNECTION_TIMEOUT, MAX_RETRIES
-from llama_cpp import Llama, llm
+from llama_cpp import Llama
 
 class EnhancedLocalChat:
     def __init__(self, model_path=None, max_tokens=512, temperature=0.7, top_p=0.9):

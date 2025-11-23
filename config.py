@@ -13,7 +13,7 @@ CONNECTION_TIMEOUT = 120  # Timeout for connections in seconds
 MAX_RETRIES = 3          # Number of retry attempts for failed requests
 
 # Engine
-VOICE_ENGINE = "pyttsx3"  # silero, pyttsx3, espeak, spd
+VOICE_ENGINE = "silero"  # silero, pyttsx3, espeak, spd
 
 # Additional voice settings
 VOICE_RATE = 200          # Speech rate

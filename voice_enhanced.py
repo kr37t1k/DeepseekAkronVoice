@@ -87,7 +87,7 @@ class EnhancedVoice:
             # Load Silero TTS model
             self.silero_model, self.silero_sample_rate = silero_tts(
                 language=USER_LANGUAGE,
-                speaker="v3_en" if USER_LANGUAGE.startswith('en') else "v3_" + USER_LANGUAGE
+                speaker="kseniya_v2"
             )
             import sounddevice as sd
             self.sd = sd
@@ -140,7 +140,7 @@ class EnhancedVoice:
                 self.spd_client.speak(text)
             elif self.current_engine == "silero":
                 # Silero TTS processing
-                audio = self.silero_model(text, speaker='en_1', sample_rate=self.silero_sample_rate)
+                audio = self.silero_model(text, speaker='kseniya_v2', sample_rate=self.silero_sample_rate)
                 self.sd.play(audio.numpy(), samplerate=self.silero_sample_rate)
                 self.sd.wait()
 
