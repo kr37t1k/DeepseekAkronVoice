@@ -54,7 +54,7 @@ class EnhancedVoice:
                 espeak.set_voice(' german')
             elif USER_LANGUAGE.lower().startswith('fr'):
                 espeak.set_voice(' french')
-        except ImportError:
+        except ModuleNotFoundError:
             print("⚠️ espeak not installed. Please install with: pip install py-espeak")
             raise
         except Exception as e:
@@ -81,18 +81,24 @@ class EnhancedVoice:
     def _init_silero(self):
         """Initialize Silero TTS engine"""
         try:
-            import torch
-            from silero import silero_tts
-            
+            from stts.silero_tts import SileroTTS
+
             # Load Silero TTS model
-            self.silero_model, self.silero_sample_rate = silero_tts(
-                language=USER_LANGUAGE,
-                speaker="kseniya_v2"
+            self.silero_model = SileroTTS(
+                model_id="v4_ru",
+                speaker="kseniya",
+                language="ru",
+                sample_rate=24000,
+                device="cpu",
+                num_threads=2,
             )
+            # self.silero_model = SileroTTS(model_id='v3_en', language='en', speaker='en_2', sample_rate=48000, device='cpu')
             import sounddevice as sd
             self.sd = sd
-        except ImportError:
-            print("⚠️ Silero TTS not installed. Please install with: pip install torch silero")
+            import soundfile as sf
+            self.sf = sf
+        except ImportError as e:
+            print(f"⚠️ Silero TTS not stable. Please make sure you installed all requirements. Error: {e}")
             raise
         except Exception as e:
             print(f"⚠️ Error initializing Silero TTS: {e}")
@@ -140,9 +146,8 @@ class EnhancedVoice:
                 self.spd_client.speak(text)
             elif self.current_engine == "silero":
                 # Silero TTS processing
-                audio = self.silero_model(text, speaker='kseniya_v2', sample_rate=self.silero_sample_rate)
-                self.sd.play(audio.numpy(), samplerate=self.silero_sample_rate)
-                self.sd.wait()
+                text = str(text).replace("\n", "")
+                self.silero_model.tts(text, "temp.wav")
 
     def set_engine(self, engine_name):
         """Switch to a different voice engine"""
@@ -201,3 +206,6 @@ class EnhancedVoice:
             return [f"ID: {v.id}, Name: {v.name}, Languages: {v.languages}" for v in self.voices]
         else:
             return [f"Current engine: {self.current_engine}"]
+
+if __name__ == "__main__":
+    EnhancedVoice().speak("дарова заебал")

@@ -8,7 +8,7 @@ from local_chat import LocalChat
 from voice_enhanced import EnhancedVoice
 from config import VOSK_MODEL_PATH
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 
 class VoiceAssistant:
     def __init__(self):

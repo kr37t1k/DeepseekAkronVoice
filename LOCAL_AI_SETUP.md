@@ -1,6 +1,6 @@
 # Local AI Server Setup
 
-This project now supports running a local AI server instead of using DeepSeek API. You can run the AI model on your phone or local machine.
+This project now supports running a local AI server instead of using ani no-free API's. You can run the AI model on your phone or local machine.
 
 ## Components
 
@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 ### 2. Run on Your Phone
 
-#### Option A: Using existing Django server (kr37t1k/MobileTextGenerationDelta)
+#### Option A: (not working rn) Using existing Django server (kr37t1k/MobileTextGenerationDelta)
 
 If you have your Django server running on your phone at `0.0.0.0:8000`:
 
@@ -34,7 +34,7 @@ If you have your Django server running on your phone at `0.0.0.0:8000`:
 1. Download a GGUF model file (e.g., a quantized LLaMA model)
 2. Run the server on your phone:
    ```bash
-   python run_llama_server.py --model-path /path/to/your/model.gguf --host 0.0.0.0 --port 8001
+   python llama_server.py --model-path /path/to/your/model.gguf --host 0.0.0.0 --port 8001
    ```
 
 ### 3. Run the Voice Assistant
@@ -54,7 +54,7 @@ If you have your Django server running on your phone at `0.0.0.0:8000`:
 
 #### With local server in the same process:
 
-If running everything on the same machine:
+If running everything on the same (super)machine:
 ```bash
 python app_with_server.py --start-server --model-path /path/to/your/model.gguf
 ```
@@ -68,7 +68,7 @@ This means it can work with any application expecting the OpenAI API format.
 
 ## Configuration
 
-Update `/workspace/config.py` to set your local AI server URL:
+Update `config.py` to set your local AI server URL:
 
 ```python
 LOCAL_AI_URL = "http://0.0.0.0:8001/v1/chat/completions"  # Default local server
@@ -87,7 +87,7 @@ LOCAL_AI_URL = "http://[PHONE_IP]:8000/v1/chat/completions"  # Your Django serve
 For mobile devices, consider using smaller models like:
 - TinyLlama
 - Phi-2
-- LLaMA models quantized to 4-bit (Q4, Q5)
+- LLaMA models quantized to 4-bit (Q4, Q5) like Qwen2.5-1.5B-Q4 or Llama-3B-Q4
 - Mistral models in GGUF format
 
 These models will run more efficiently on mobile hardware while still providing good responses.

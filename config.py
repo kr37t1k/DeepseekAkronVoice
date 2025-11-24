@@ -13,7 +13,8 @@ CONNECTION_TIMEOUT = 120  # Timeout for connections in seconds
 MAX_RETRIES = 3          # Number of retry attempts for failed requests
 
 # Engine
-VOICE_ENGINE = "espeak"  # silero, pyttsx3, espeak, spd - espeak is most compatible with Termux
+# You also need to install silero-tts from kr37t1k/stts-python where you can find releases!
+VOICE_ENGINE = "silero"  # silero, pyttsx3, espeak, spd - espeak is most compatible with Termux
 
 # Additional voice settings
 VOICE_RATE = 200          # Speech rate

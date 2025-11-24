@@ -1,6 +1,8 @@
 # Voice Assistant with Local AI
 
 Speech-to-text tool for talking with a local AI assistant. Now supports running AI models locally on your device instead of using external APIs.
+### You also need to install silero-tts engine from kr37t1k/stts-python - here you can find releases page and download the latest build version!
+
 
 ## Features
 - Voice input using Vosk speech recognition
@@ -42,6 +44,10 @@ python app_with_server.py --start-server --model-path /path/to/your/model.gguf
 ### Option 3: Run the server separately (for mobile)
 ```bash
 python run_llama_server.py --model-path /path/to/your/model.gguf --host 0.0.0.0 --port 8001
+```
+### OR
+```bash
+python llama_server.py --model-path /path/to/your/model.gguf --host 0.0.0.0 --port 8001
 ```
 
 ## Configuration
