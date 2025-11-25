@@ -339,7 +339,7 @@ def main():
                 n_batch=512,
                 seed=-1,
                 n_threads_batch=0,
-                chat_format=("qwen" if "qwen" in str(args.model_path).lower() else "llama"),
+                chat_format=("qwen" if "qwen" in str(args.model_path).lower() else "llama-3"),
                 offload_kqv=True,
                 verbose=False
             )
