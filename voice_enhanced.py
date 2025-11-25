@@ -84,15 +84,15 @@ class EnhancedVoice:
             from stts.silero_tts import SileroTTS
 
             # Load Silero TTS model
-            self.silero_model = SileroTTS(
+            self.silero_model_ru = SileroTTS(
                 model_id="v4_ru",
-                speaker="kseniya",
+                speaker="baya",
                 language="ru",
-                sample_rate=24000,
+                sample_rate=48000,
                 device="cpu",
-                num_threads=2,
+                num_threads=4,
             )
-            # self.silero_model = SileroTTS(model_id='v3_en', language='en', speaker='en_2', sample_rate=48000, device='cpu')
+            self.silero_model_en = SileroTTS(model_id='v3_en', language='en', speaker='random', sample_rate=48000, device='cpu')
             import sounddevice as sd
             self.sd = sd
             import soundfile as sf
@@ -125,8 +125,10 @@ class EnhancedVoice:
         eng_chars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
         rus_chars = ["а", "б", "в", "г", "д", "е", "ё", "ж", "з", "и", "й", "к", "л", "м", "н", "о", "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я"]
         
+        # if any(char in rus_chars for char in text):
         if any(char in rus_chars for char in text):
             target_lang = "ru"
+        # elif any(char in eng_chars for char in text):
         elif any(char in eng_chars for char in text):
             target_lang = "en"
         else:
@@ -147,7 +149,8 @@ class EnhancedVoice:
             elif self.current_engine == "silero":
                 # Silero TTS processing
                 text = str(text).replace("\n", "")
-                self.silero_model.tts(text, "temp.wav")
+                if target_lang == "ru": self.silero_model_ru.tts(text, "temp.wav")
+                else: self.silero_model_en.tts(text, "temp.wav")
 
     def set_engine(self, engine_name):
         """Switch to a different voice engine"""
@@ -206,6 +209,6 @@ class EnhancedVoice:
             return [f"ID: {v.id}, Name: {v.name}, Languages: {v.languages}" for v in self.voices]
         else:
             return [f"Current engine: {self.current_engine}"]
-
-if __name__ == "__main__":
-    EnhancedVoice().speak("дарова заебал")
+#
+# if __name__ == "__main__":
+#     EnhancedVoice().speak("дарова заебал")
