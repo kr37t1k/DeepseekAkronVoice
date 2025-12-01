@@ -1,26 +1,55 @@
 ```
+# Dependencies
+*.txt
+!requirements.txt
+!requirements_mcp.txt
+
 # Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
 .Python
+env/
 venv/
 .venv/
-.env
-.env.local
-.env.*
-
-# Logs
-*.log
-
-# Testing
+.venv*/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
 .coverage
-htmlcov/
 .coverage.*
 .cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+*.pot
+*.pot.*
+*.mo
+*.mo.*
+MCP_SERVERS.md
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Testing
 .pytest_cache/
 .mypy_cache/
+.coverage
+htmlcov/
 
 # Distribution / packaging
 .Python
@@ -40,14 +69,10 @@ wheels/
 .installed.cfg
 *.egg
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*.tmp
-
-# OS
-.DS_Store
-Thumbs.db
+# Environment
+.env
+.env.local
+.env.*
+!requirements.txt
+!requirements_mcp.txt
 ```

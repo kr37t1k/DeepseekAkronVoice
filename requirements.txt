@@ -10,3 +10,6 @@ llama-cpp-python
 TTS
 silero
 torch
+aiohttp
+psutil
+wmi; sys_platform == 'win32'  # Windows-specific module
