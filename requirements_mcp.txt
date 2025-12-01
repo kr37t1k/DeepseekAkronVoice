@@ -1,0 +1,4 @@
+# Requirements for MCP (Model Context Protocol) servers
+aiohttp
+psutil
+# wmi is Windows-specific, so not included for cross-platform
