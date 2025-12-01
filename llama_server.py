@@ -17,6 +17,7 @@ import socket
 from socketserver import ThreadingMixIn
 import concurrent.futures
 from datetime import datetime
+import platform
 
 # Try to import llama-cpp-python, fallback to mock if not available
 try:

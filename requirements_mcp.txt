@@ -1,4 +1,5 @@
 # Requirements for MCP (Model Context Protocol) servers
 aiohttp
 psutil
+websocket-client
 # wmi is Windows-specific, so not included for cross-platform
