@@ -12,4 +12,5 @@ silero
 torch
 aiohttp
 psutil
+websocket-client
 wmi; sys_platform == 'win32'  # Windows-specific module

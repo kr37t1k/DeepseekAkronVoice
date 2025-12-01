@@ -75,7 +75,7 @@ class VoiceAssistant:
         # Initialize chat and voice components
         try:
             self.chat = LocalChat()
-            print("✅ Chat component initialized")
+            print("✅ Chat component initialized with MCP support")
         except Exception as e:
             print(f"⚠️ Failed to initialize chat: {e}")
             print("❌ Cannot proceed without chat functionality")
@@ -95,6 +95,7 @@ class VoiceAssistant:
 
         print("🎤 Assistant is ready...")
         print("💡 Commands: Speak naturally or type 'exit', 'quit', or 'stop' to end")
+        print("💡 MCP Features: Ask for system info, battery, storage, network, file operations, etc.")
 
     def audio_callback(self, indata, frames, time, status):
         if status:
