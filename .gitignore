@@ -1,45 +1,33 @@
-```gitignore
-# Python
-__pycache__/
+```
+# Compiled and build artifacts
 *.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv/
-.ENV
-.env
-.env.local
-.env.*
-.venv/
-venv/
-ENV/
-.env.bak
-.python-version
+__pycache__/
 
 # Dependencies
-requirements*.txt
-*.lock
+.venv/
+venv/
+node_modules/
 
-# Testing
-.coverage
-htmlcov/
-.tox/
-.nox/
-coverage.xml
-*.cover
+# Logs and temp files
 *.log
 *.tmp
+*.swp
 
-# IDE
+# Environment
+.env
+.env.local
+*.env.*
+
+# Editors
 .vscode/
 .idea/
-*.swp
-*.swo
-*.swn
 
-# OS
-.DS_Store
-Thumbs.db
+# Coverage reports
+.coverage
+coverage/
+htmlcov/
+
+# Testing
+.pytest_cache/
+.mypy_cache/
 ```

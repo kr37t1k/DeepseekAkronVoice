@@ -1,14 +1,15 @@
-# Enhanced LLaMA and MCP Server Setup
+# Enhanced Streaming LLaMA and MCP Server Setup
 
-This project provides enhanced versions of LLaMA and MCP servers with additional features including document parsing and stable synchronization.
+This project provides enhanced versions of LLaMA and MCP servers with additional features including document parsing, streaming support for LM Studio, and stable synchronization.
 
 ## Features
 
-### Enhanced LLaMA Server (`enhanced_llama_server.py`)
-- Standard OpenAI-compatible API endpoint
+### Enhanced Streaming LLaMA Server (`streaming_llama_server.py`)
+- Standard OpenAI-compatible API endpoint with streaming support
 - Document parsing for .pdf, .docx, .txt, .md files
 - File parsing endpoint: `/parse/{file_path}`
 - Document processing endpoint: `/v1/document/process`
+- **NEW: Streaming support for LM Studio compatibility** - Uses Server-Sent Events (SSE) for real-time token streaming
 - Threaded request handling
 - Health and stats endpoints
 - Mock model fallback for testing
@@ -23,10 +24,11 @@ This project provides enhanced versions of LLaMA and MCP servers with additional
 - Shell command execution
 - Cross-platform support
 
-### Unified Launcher (`unified_server_launcher.py`)
+### Unified Streaming Launcher (`unified_streaming_launcher.py`)
 - Launch both servers simultaneously
 - Built-in health checks
 - Document parsing test functionality
+- **NEW: Streaming capability testing** - Tests Server-Sent Events functionality
 - Single command to start everything
 
 ## Installation
@@ -40,28 +42,28 @@ pip install -r requirements_enhanced.txt
 
 ## Usage
 
-### Quick Start with Mock Model (No Model Required)
+### Quick Start with Mock Model (No Model Required) - Streaming Version
 ```bash
-python unified_server_launcher.py --test
+python unified_streaming_launcher.py --test
 ```
 
-### With a GGUF Model
+### With a GGUF Model - Streaming Version
 ```bash
-python unified_server_launcher.py --model-path /path/to/your/model.gguf --test
+python unified_streaming_launcher.py --model-path /path/to/your/model.gguf --test
 ```
 
 ### Individual Server Launch
 ```bash
-# LLaMA server
-python enhanced_llama_server.py --model-path /path/to/model.gguf --port 8001
+# Streaming LLaMA server
+python streaming_llama_server.py --model-path /path/to/model.gguf --port 8001
 
 # MCP server
 python enhanced_mcp_server.py --port 3000
 ```
 
-### Test Document Parsing
+### Test Document Parsing - Streaming Version
 ```bash
-python unified_server_launcher.py --test --demo-file test_document.md
+python unified_streaming_launcher.py --test --demo-file test_document.md
 ```
 
 ## API Endpoints
@@ -69,9 +71,9 @@ python unified_server_launcher.py --test --demo-file test_document.md
 ### LLaMA Server (default port 8001)
 - `GET /health` - Health check
 - `GET /stats` - Server statistics
-- `GET /models` - Available models
+- `GET /models` - Available models (now includes streaming capability)
 - `GET /parse/{file_path}` - Parse document at file path
-- `POST /v1/chat/completions` - Standard OpenAI-compatible chat endpoint
+- `POST /v1/chat/completions` - Standard OpenAI-compatible chat endpoint with streaming support (use `stream=true` in request)
 - `POST /v1/document/process` - Process document with AI
 
 ### MCP Server (default port 3000)
@@ -101,10 +103,11 @@ Both servers bind to `0.0.0.0` by default, making them accessible from other dev
 
 ## Testing
 
-The unified launcher includes a test mode that verifies:
+The unified streaming launcher includes a test mode that verifies:
 - Server health endpoints
 - Tool availability
 - Document parsing functionality
+- **NEW: Streaming capability testing** - Tests Server-Sent Events functionality for LM Studio compatibility
 - Basic connectivity
 
 ## Configuration
